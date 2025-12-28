@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Poisoned",
+    "description": "Body contaminated by harmful substance",
+    "key": "poisoned",
+    "origin": "condition",
+    "effects": [
+      {
+        "description": "Disadvantage on attack rolls and ability checks."
+      }
+    ]
+  }
+]

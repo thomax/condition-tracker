@@ -1,0 +1,138 @@
+[
+  {
+    "title": "Shaken",
+    "description": "Reeling from a trauma",
+    "key": "shaken",
+    "origin": "condition",
+    "end": "Spirit roll",
+    "effects": [
+      {
+        "description": "May only take free actions (e.g. move)"
+      }
+    ]
+  },
+  {
+    "title": "Distracted",
+    "description": "Hard to focus on what's important",
+    "key": "distracted",
+    "origin": "condition",
+    "effects": [
+      {
+        "description": "Subtract 2 from all Trait rolls until the end of next turn",
+        "targetAbility": "trait.*",
+        "modifierType": "add",
+        "modifierValue": -2
+      }
+    ]
+  },
+  {
+    "title": "Vulnerable",
+    "description": "Unable to defend effectively",
+    "key": "vulnerable",
+    "origin": "condition",
+    "effects": [
+      {
+        "description": "Actions and attacks against you are made at +2 until the end of next turn",
+        "targetAbility": "other.actions_against",
+        "modifierType": "add",
+        "modifierValue": 2
+      }
+    ]
+  },
+  {
+    "title": "Entangled",
+    "description": "Held in place by something",
+    "key": "entangled",
+    "origin": "condition",
+    "end": "Strength -2 or Athletics roll",
+    "effects": [
+      {
+        "description": "Cannot move",
+        "targetAbility": "derived.pace",
+        "modifierType": "set",
+        "modifierValue": 0
+      },
+      {
+        "key": "entangled" 
+      }
+    ]
+  },
+  {
+    "title": "Bound",
+    "description": "Held tight by something",
+    "key": "bound",
+    "origin": "condition",
+    "end": "Strength -2 or Athletics roll. Success: Improves to Entangled. Raise: Free.",
+    "effects": [
+      {
+        "description": "Can not move",
+        "targetAbility": "derived.pace",
+        "modifierType": "multiply",
+        "modifierValue": 0
+      },
+      {
+        "key": "distracted" 
+      },
+      {
+        "key": "vulnerable" 
+      },
+      {
+        "description": "Cannot make physical actions other than trying to break free"
+      }
+    ]
+  },
+  {
+    "title": "Prone",
+    "description": "Lying down, or on your knees",
+    "key": "prone",
+    "origin": "condition",
+    "end": "Standing costs 2 movement",
+    "effects": [
+      {
+        "description": "Parry is difficult",
+        "targetAbility": "derived.parry",
+        "modifierType": "add",
+        "modifierValue": -2
+      },
+      {
+        "description": "Melee attack is difficult",
+        "targetAbility": "traits.skills.fighting",
+        "modifierType": "add",
+        "modifierValue": -2
+      },
+      {
+        "description": "Movement is slow",
+        "targetAbility": "derived.pace",
+        "modifierType": "multiply",
+        "modifierValue": 0.5
+      },
+      {
+        "description": "Ranged attacks suffer a −4 penalty to hit prone characters from a range of 3 or greater (this does not stack with Cover) and subtract four points of damage from Area Effect attacks."
+      }
+    ]
+  },
+  {
+    "title": "Stunned",
+    "description": "Pretty much helpless",
+    "key": "stunned",
+    "origin": "condition",
+    "end": "Vigor roll. Success: Vulnerable until end of next turn. Raise: Vulnerable until end of this turn",
+    "effects": [
+      {
+        "key": "distracted" 
+      },
+      {
+        "key": "vulnerable" 
+      },
+      {
+        "key": "prone" 
+      },
+      {
+        "description": "Cannot move or take any actions."
+      },
+      {
+        "description": "Do not contribute to gang-up bonuses."
+      }
+    ]
+  }
+]
