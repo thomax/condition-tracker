@@ -34,11 +34,14 @@ h1 {
   line-height: 1.1;
 }
 
-.card {
-  padding: 2em;
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-#app {
+main {
+  width: 80vw;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;

@@ -1,9 +1,9 @@
 export type AppData = {
   systems: Array<SystemType>
   characters: Array<CharacterType>
-  currentSystem: SystemType
-  currentCharacter: CharacterType | null
+  currentSystem: SystemType | null
   buffs: Array<BuffType>
+  url: Record<string, string | null>
 }
 
 export type SystemType = {
@@ -22,7 +22,7 @@ export type EffectType = {
   description?: string
   key?: string
   targetAbility?: string
-  modifierType?: "add" | "multiply" | "set"
+  modifierType?: 'add' | 'multiply' | 'set'
   modifierValue?: number
 }
 
