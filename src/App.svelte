@@ -27,8 +27,8 @@
   <main>
     <Route path="/" component={Home} />
     <Route path="/about" component={About} />
-    <Route path="/:system" component={System} />
-    <Route path="/:system/:character" component={System} />
+    <Route path="/:systemKey" component={System} />
+    <Route path="/:systemKey/:characterKey" component={System} />
   </main>
 </Router>
 

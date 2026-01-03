@@ -1,13 +1,20 @@
 <script lang="ts">
   import { dataStore } from '../data/dataStore'
-  import CharacterEdit from './CharacterEdit.svelte'
+  import Character from '../components/Character.svelte'
+  import CharacterEdit from '../components/CharacterEdit.svelte'
+  import type { SystemType, CharacterType } from '../types/models'
 
-  const { system: systemKey, character: characterKey } = $props<{
-    system: string
-    character: string
+  const { systemKey, characterKey } = $props<{
+    systemKey: string
+    characterKey: string
   }>()
-
   let action: string | null = $state(null)
+  const system = $derived($dataStore.systems.find(s => s.key === systemKey) as SystemType)
+  const character = $derived(
+    $dataStore.characters.find(
+      c => c.systemKey === systemKey && c.key === characterKey
+    ) as CharacterType
+  )
 
   $effect(() => {
     const params = new URLSearchParams(location.search)
@@ -15,14 +22,20 @@
   })
 </script>
 
-<h1>System: {systemKey}</h1>
-<h2>Character: {characterKey}</h2>
-<h3>Action: {action}</h3>
+<h1>{[system?.title, character?.name, action].filter(Boolean).join(' / ')}</h1>
 
-{#if action === 'edit'}
-  <CharacterEdit {systemKey} {characterKey} />
+{#if characterKey}
+  {#if action === 'edit'}
+    <CharacterEdit {systemKey} {characterKey} />
+  {:else}
+    <Character {systemKey} {characterKey} />
+  {/if}
 {:else}
   <pre>
     {JSON.stringify($dataStore.buffs, null, 2)}
   </pre>
 {/if}
+
+<pre>
+  {JSON.stringify($dataStore.buffs, null, 2)}
+</pre>

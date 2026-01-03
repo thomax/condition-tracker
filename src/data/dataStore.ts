@@ -1,8 +1,7 @@
 import systems from './systems.json'
 import swadeConditions from './swade/conditions.json'
 import dndConditions from './5e/conditions.json'
-import { get, writable, derived } from 'svelte/store'
-import { listen as addListener } from 'svelte5-router'
+import { get, writable } from 'svelte/store'
 import type { AppData, BuffType, CharacterType, SystemType } from '../types/models'
 import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from './localStorage'
 
@@ -32,7 +31,6 @@ export const dataStore = writable<AppData>({
   characters: getLocalStorageItem('characters') || ([] as any),
   systems: systems as SystemType[],
   buffs: getBuffsForSystem((getCurrentSystem() as SystemType).key),
-  url: {},
 })
 
 export const setCurrentSystem = (systemKey: string | undefined) => {

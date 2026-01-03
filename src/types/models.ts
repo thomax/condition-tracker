@@ -3,7 +3,6 @@ export type AppData = {
   characters: Array<CharacterType>
   currentSystem: SystemType | null
   buffs: Array<BuffType>
-  url: Record<string, string | null>
 }
 
 export type SystemType = {
@@ -15,7 +14,7 @@ export type CharacterType = {
   name: string
   key: string
   systemKey: string
-  activeBuffs: Array<BuffType>[]
+  activeBuffs: Array<BuffType>
 }
 
 export type EffectType = {

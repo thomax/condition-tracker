@@ -16,36 +16,33 @@
     DropdownItem,
     Icon,
   } from '@sveltestrap/sveltestrap'
-
-  import { Link } from 'svelte5-router'
+  import { Link, useLocation } from 'svelte5-router'
   import { dataStore, setCurrentSystem } from '../data/dataStore'
   import type { CharacterType } from '../types/models'
 
   let isOpen = $state<boolean>(false)
-
-  function handleUpdate(event: any) {
-    isOpen = event.detail.isOpen
-  }
-
-  let systemKey = $state<string | undefined>()
-  let characterKey = $state<string | undefined>()
   let characters = $state<Array<CharacterType>>([])
-  let currentColorMode = $derived(colorMode)
+  let currentColorMode = $state(colorMode)
 
-  colorMode.subscribe((value: any) => {
-    console.log('NavigationBar colorMode changed to:', value)
-    currentColorMode = value
-  })
+  const location = useLocation()
+  const [systemKey, characterKey] = $derived($location.pathname.split('/').filter(Boolean))
 
   const currentCharacter = $derived(
     $dataStore.characters.find(char => char.systemKey === systemKey && char.key === characterKey)
   )
 
+  colorMode.subscribe((value: any) => {
+    currentColorMode = value
+  })
+
+  const handleUpdate = (event: any) => {
+    isOpen = Boolean(event.detail.isOpen)
+  }
+
   $effect(() => {
-    ;[systemKey, characterKey] = location.pathname.split('/').filter(Boolean)
     characters = $dataStore.characters.filter(c => c.systemKey === systemKey)
     setCurrentSystem(systemKey)
-    console.log('colorMode', currentColorMode)
+    console.log('isOpen:', isOpen)
   })
 </script>
 

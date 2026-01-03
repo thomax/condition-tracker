@@ -45,7 +45,6 @@
   }
 
   const handleSubmit = () => {
-    console.log('Submitting character:', characterWip)
     if (!characterWip.name || !isCharacterKeyUnique) {
       return
     }
@@ -54,21 +53,17 @@
   }
 
   const handleDelete = () => {
-    console.log('Deleting character:', characterWip)
     deleteCharacter(characterWip.key)
     navigate(`/${systemKey}`)
   }
 
   const handleCancel = () => {
-    console.log('Cancel')
-    navigate(`/${systemKey}`)
+    navigate(`/${systemKey}/${characterWip.key}`)
   }
 </script>
 
-<h1>Edit Character</h1>
-
 <form onsubmit={handleSubmit}>
-  <div>
+  <div class="mb-2">
     <label for="characterName">Character Name</label>
     <input
       type="text"
@@ -89,23 +84,31 @@
     />
   </div>
 
-  <button type="submit" onclick={handleSubmit} disabled={!isCharacterKeyUnique}>
+  <button
+    type="submit"
+    onclick={handleSubmit}
+    disabled={!isCharacterKeyUnique}
+    class="bg-success p-2 text-white"
+  >
     Save Changes
   </button>
-  <button type="submit" onclick={handleDelete} disabled={isCharacterStored} class="danger">
+  <button
+    type="submit"
+    onclick={handleDelete}
+    disabled={isCharacterStored}
+    class="bg-danger p-2 text-white"
+  >
     Delete
   </button>
-  <button type="reset" onclick={handleCancel}>Cancel</button>
+  <button type="reset" onclick={handleCancel} class="bg-secondary-subtle p-2 text-black">
+    Cancel
+  </button>
 </form>
 
 <style>
   form {
     max-width: 400px;
     margin: 2rem 0;
-  }
-
-  div {
-    margin-bottom: 1rem;
   }
 
   label {
@@ -123,16 +126,13 @@
   }
 
   button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    background-color: #4caf50;
-    color: white;
+    padding: 0.5rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
 
   button:hover {
-    background-color: #45a049;
+    opacity: 0.8;
   }
 </style>
