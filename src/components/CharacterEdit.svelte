@@ -1,21 +1,29 @@
 <script lang="ts">
+  import { get } from 'svelte/store'
   import { dataStore, editCharacter, deleteCharacter } from '../data/dataStore'
+  import { getLocationStore } from '../data/locationStore'
   import { navigate } from 'svelte5-router'
   import { faker } from '@faker-js/faker'
 
-  const { systemKey, characterKey } = $props<{
-    systemKey: string
-    characterKey: string
-  }>()
+  const locationParams = getLocationStore()
+  const systemKey = $derived($locationParams.systemKey ?? '')
+  const characterKey = $derived($locationParams.characterKey ?? '')
 
   const randomName = faker.person.firstName()
-  const keyFromName = (name: string) => name.toLowerCase().replace(/\s+/g, '-')
+  const keyFromName = (name: string) => name.toLowerCase().replace(/\\s+/g, '-')
+
+  // Get initial values from the store synchronously
+  const initialParams = get(locationParams)
+  const initialSystemKey = initialParams.systemKey ?? ''
+  const initialCharacterKey = initialParams.characterKey ?? ''
 
   let characterWip = $state(
-    $dataStore.characters.find(c => c.systemKey === systemKey && c.key === characterKey) || {
+    get(dataStore).characters.find(
+      c => c.systemKey === initialSystemKey && c.key === initialCharacterKey
+    ) || {
       name: randomName,
       key: keyFromName(randomName),
-      systemKey: systemKey,
+      systemKey: initialSystemKey,
       activeBuffs: [],
     }
   )

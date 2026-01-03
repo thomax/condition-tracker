@@ -1,11 +1,11 @@
 <script lang="ts">
   import { dataStore } from '../data/dataStore'
+  import { getLocationStore } from '../data/locationStore'
   import type { CharacterType } from '../types/models'
 
-  const { characterKey, systemKey } = $props<{
-    characterKey: string
-    systemKey: string
-  }>()
+  const locationParams = getLocationStore()
+  const systemKey = $derived($locationParams.systemKey)
+  const characterKey = $derived($locationParams.characterKey)
 
   const character = $derived(
     $dataStore.characters.find(

@@ -16,16 +16,18 @@
     DropdownItem,
     Icon,
   } from '@sveltestrap/sveltestrap'
-  import { Link, useLocation } from 'svelte5-router'
+  import { Link } from 'svelte5-router'
   import { dataStore, setCurrentSystem } from '../data/dataStore'
+  import { getLocationStore } from '../data/locationStore'
   import type { CharacterType } from '../types/models'
 
   let isOpen = $state<boolean>(false)
   let characters = $state<Array<CharacterType>>([])
   let currentColorMode = $state(colorMode)
 
-  const location = useLocation()
-  const [systemKey, characterKey] = $derived($location.pathname.split('/').filter(Boolean))
+  const locationParams = getLocationStore()
+  const systemKey = $derived($locationParams.systemKey)
+  const characterKey = $derived($locationParams.characterKey)
 
   const currentCharacter = $derived(
     $dataStore.characters.find(char => char.systemKey === systemKey && char.key === characterKey)

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { Router, Link, Route } from 'svelte5-router'
-
-  import { dataStore } from './data/dataStore'
+  import { Router, Route } from 'svelte5-router'
 
   import Home from './views/Home.svelte'
   import About from './views/About.svelte'
   import System from './views/System.svelte'
-  import NavigationBar from './components/NavigationBar.svelte'
+  import RouterContent from './components/RouterContent.svelte'
 
   let url = ''
 </script>
@@ -23,13 +21,12 @@
 </svelte:head>
 
 <Router {url}>
-  <NavigationBar />
-  <main>
+  <RouterContent>
     <Route path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/:systemKey" component={System} />
     <Route path="/:systemKey/:characterKey" component={System} />
-  </main>
+  </RouterContent>
 </Router>
 
 <style>
