@@ -30,7 +30,7 @@ export const dataStore = writable<AppData>({
   currentSystem: null,
   characters: getLocalStorageItem('characters') || ([] as any),
   systems: systems as SystemType[],
-  buffs: getBuffsForSystem((getCurrentSystem() as SystemType).key),
+  buffs: [],
 })
 
 export const setCurrentSystem = (systemKey: string | undefined) => {

@@ -35,3 +35,29 @@ export type BuffType = {
   end?: string
   effects: EffectType[]
 }
+
+export type BuffsResolution = {
+  traits: {
+    attributes: {
+      agility: number
+      smarts: number
+      spirit: number
+      strength: number
+      vigor: number
+    }
+    skills: Record<string, number>
+  }
+  derived: {
+    pace: number
+    parry: number
+    toughness: number
+    run: string
+    size: number
+  }
+  other: {
+    wounds: number
+    fatigue: number
+    bennies: number
+    power: number
+  }
+}
