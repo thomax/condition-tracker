@@ -44,7 +44,6 @@
   $effect(() => {
     characters = $dataStore.characters.filter(c => c.systemKey === systemKey)
     setCurrentSystem(systemKey)
-    console.log('isOpen:', isOpen)
   })
 </script>
 

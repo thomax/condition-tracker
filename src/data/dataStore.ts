@@ -50,10 +50,9 @@ export const setCurrentSystem = (systemKey: string | undefined) => {
   })
 }
 
-export const deleteCharacter = (characterKey: string) => {
-  console.log('deleteCharacter:', characterKey)
+export const deleteCharacter = (characterId: string) => {
   const data = get(dataStore)
-  const updatedCharacters = data.characters.filter(c => c.key !== characterKey)
+  const updatedCharacters = data.characters.filter(char => char.id !== characterId)
 
   dataStore.update(data => {
     const newData = {
@@ -66,7 +65,6 @@ export const deleteCharacter = (characterKey: string) => {
 }
 
 export const editCharacter = (character: CharacterType) => {
-  console.log('editCharacter:', character)
   const data = get(dataStore)
   const existingCharacterIndex = data.characters.findIndex(
     char => char.key === character.key && char.systemKey === character.systemKey
@@ -74,10 +72,8 @@ export const editCharacter = (character: CharacterType) => {
   // If character key exists, swap it for the one being edited. If not, add it.
   const allCharacters = data.characters
   if (existingCharacterIndex !== -1) {
-    console.log('...update!', character)
     allCharacters[existingCharacterIndex] = character
   } else {
-    console.log('...add!', character)
     allCharacters.push(character)
   }
 

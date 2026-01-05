@@ -4,7 +4,7 @@
   import Home from './views/Home.svelte'
   import About from './views/About.svelte'
   import System from './views/System.svelte'
-  import RouterContent from './components/RouterContent.svelte'
+  import NavigationBar from './components/NavigationBar.svelte'
 
   let url = ''
 </script>
@@ -21,12 +21,13 @@
 </svelte:head>
 
 <Router {url}>
-  <RouterContent>
+  <NavigationBar />
+  <main>
     <Route path="/" component={Home} />
     <Route path="/about" component={About} />
     <Route path="/:systemKey" component={System} />
     <Route path="/:systemKey/:characterKey" component={System} />
-  </RouterContent>
+  </main>
 </Router>
 
 <style>

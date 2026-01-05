@@ -6,11 +6,13 @@ export type AppData = {
 }
 
 export type SystemType = {
+  id: string
   title: string
   key: string
 }
 
 export type CharacterType = {
+  id: string
   name: string
   key: string
   systemKey: string

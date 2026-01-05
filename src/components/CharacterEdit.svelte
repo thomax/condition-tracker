@@ -4,26 +4,22 @@
   import { getLocationStore } from '../data/locationStore'
   import { navigate } from 'svelte5-router'
   import { faker } from '@faker-js/faker'
+  import { customAlphabet } from 'nanoid'
+  const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 6)
 
   const locationParams = getLocationStore()
-  const systemKey = $derived($locationParams.systemKey ?? '')
-  const characterKey = $derived($locationParams.characterKey ?? '')
+  const systemKey = $derived($locationParams.systemKey) as string
+  const characterKey = $derived($locationParams.characterKey)
 
   const randomName = faker.person.firstName()
-  const keyFromName = (name: string) => name.toLowerCase().replace(/\\s+/g, '-')
-
-  // Get initial values from the store synchronously
-  const initialParams = get(locationParams)
-  const initialSystemKey = initialParams.systemKey ?? ''
-  const initialCharacterKey = initialParams.characterKey ?? ''
+  const keyFromName = (name: string) => name.toLowerCase().replace(/\s+/g, '-')
 
   let characterWip = $state(
-    get(dataStore).characters.find(
-      c => c.systemKey === initialSystemKey && c.key === initialCharacterKey
-    ) || {
+    get(dataStore).characters.find(c => c.systemKey === systemKey && c.key === characterKey) || {
+      id: nanoid(),
       name: randomName,
       key: keyFromName(randomName),
-      systemKey: initialSystemKey,
+      systemKey,
       activeBuffs: [],
     }
   )
@@ -36,12 +32,14 @@
   )
 
   const isCharacterStored = $derived(
-    $dataStore.characters
-      .filter(char => char.systemKey === systemKey)
-      .find(c => c.key === characterWip.key) !== undefined
+    Boolean(
+      $dataStore.characters.filter(
+        char => char.systemKey === systemKey && char.key === characterWip.key
+      )
+    )
   )
 
-  const handleNameChage = (event: Event) => {
+  const handleNameUpdate = (event: Event) => {
     const target = event.target as HTMLInputElement
     const characterName = target.value
     const characterKey = keyFromName(characterName)
@@ -61,7 +59,7 @@
   }
 
   const handleDelete = () => {
-    deleteCharacter(characterWip.key)
+    deleteCharacter(characterWip.id)
     navigate(`/${systemKey}`)
   }
 
@@ -70,26 +68,20 @@
   }
 </script>
 
-<form onsubmit={handleSubmit}>
+<form onsubmit={handleSubmit} class="my-2">
   <div class="mb-2">
-    <label for="characterName">Character Name</label>
     <input
       type="text"
+      class="d-inline-block w-50 me-2"
       id="characterName"
       bind:value={characterWip.name}
       placeholder="Enter character name"
       required
-      oninput={handleNameChage}
+      oninput={handleNameUpdate}
     />
-    <input
-      class="mt-1"
-      type="text"
-      id="characterKey"
-      bind:value={characterWip.key}
-      placeholder="character key"
-      required
-      disabled
-    />
+    <span class="w-50 text-muted">
+      [{keyFromName(characterWip.name)}]
+    </span>
   </div>
 
   <button
@@ -98,12 +90,12 @@
     disabled={!isCharacterKeyUnique}
     class="bg-success p-2 text-white"
   >
-    Save Changes
+    Save character
   </button>
   <button
     type="submit"
     onclick={handleDelete}
-    disabled={isCharacterStored}
+    disabled={!isCharacterStored}
     class="bg-danger p-2 text-white"
   >
     Delete
@@ -114,17 +106,6 @@
 </form>
 
 <style>
-  form {
-    max-width: 400px;
-    margin: 2rem 0;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-
   input {
     width: 100%;
     padding: 0.5rem;
