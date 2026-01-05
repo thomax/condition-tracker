@@ -29,7 +29,7 @@
     {/each}
   </ul>
 {:else}
-  <p>Character not found</p>
+  <p>Character with key {characterKey} not found</p>
 {/if}
 
 <style>

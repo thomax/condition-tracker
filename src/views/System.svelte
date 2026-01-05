@@ -18,18 +18,21 @@
   )
 </script>
 
-<h1>{[system?.title, character?.name, action].filter(Boolean).join(' / ')}</h1>
+{#if system}
+  <h1>{[system.title, character?.name, action].filter(Boolean).join(' / ')}</h1>
 
-{#if characterKey}
-  {#if action === 'edit'}
-    <CharacterEdit />
-  {:else}
-    <Character />
+  {#if characterKey}
+    {#if action === 'edit'}
+      <CharacterEdit />
+    {:else}
+      <pre>
+        {JSON.stringify($dataStore.buffs, null, 2)}
+      </pre>
+      <Character />
+    {/if}
   {/if}
 {:else}
-  <pre>
-    {JSON.stringify($dataStore.buffs, null, 2)}
-  </pre>
+  <p>System with key {systemKey} not found</p>
 {/if}
 
 <pre>
