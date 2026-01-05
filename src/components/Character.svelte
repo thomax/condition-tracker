@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Icon } from '@sveltestrap/sveltestrap'
   import { dataStore } from '../data/dataStore'
   import { getLocationStore } from '../data/locationStore'
   import type { CharacterType } from '../types/models'
@@ -16,12 +15,6 @@
 </script>
 
 {#if character}
-  <h2>
-    {character.name}
-    <a href={`/${systemKey}/${characterKey}/?action=edit`} title="Edit">
-      <Icon name="wrench-adjustable" />
-    </a>
-  </h2>
   <h3>Active buffs</h3>
   <ul>
     {#each character.activeBuffs as buff}

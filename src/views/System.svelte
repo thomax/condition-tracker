@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Icon } from '@sveltestrap/sveltestrap'
   import { dataStore, editCharacter } from '../data/dataStore'
   import { getLocationStore } from '../data/locationStore'
   import Character from '../components/Character.svelte'
@@ -37,50 +38,41 @@
 </script>
 
 {#if system}
-  <h1>{[system.title, character?.name, action].filter(Boolean).join(' / ')}</h1>
+  <h1>
+    {[system.title, character?.name, action].filter(Boolean).join(' / ')}
+    {#if characterKey && action !== 'edit'}
+      <a class="ms-2" href={`/${systemKey}/${characterKey}/?action=edit`} title="Edit">
+        <Icon name="wrench-adjustable" class="text-muted fs-2" />
+      </a>
+    {/if}
+  </h1>
 
   {#if characterKey}
     {#if action === 'edit'}
-      <CharacterEdit />
+      <section class="mt-4">
+        <CharacterEdit />
+      </section>
     {:else}
-      <div class="buffs">
-        {#each $dataStore.buffs as buff}
-          <button class:selected={isBuffActive(buff)} onclick={() => toggleBuff(buff)}>
-            {buff.title}
-          </button>
-        {/each}
-      </div>
-      <Character />
+      <section class="mt-4">
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          {#each $dataStore.buffs as buff}
+            <button
+              class="btn"
+              class:btn-secondary={isBuffActive(buff)}
+              class:btn-outline-secondary={!isBuffActive(buff)}
+              onclick={() => toggleBuff(buff)}
+            >
+              {buff.title}
+            </button>
+          {/each}
+        </div>
+      </section>
+
+      <section class="mt-4">
+        <Character />
+      </section>
     {/if}
   {/if}
 {:else}
   <p>System with key {systemKey} not found</p>
 {/if}
-
-<style>
-  .buffs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .buffs button {
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #f5f5f5;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .buffs button:hover {
-    background: #e0e0e0;
-  }
-
-  .buffs button.selected {
-    background: #4caf50;
-    color: white;
-    border-color: #388e3c;
-  }
-</style>
