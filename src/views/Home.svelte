@@ -1,4 +1,6 @@
 <script lang="ts">
 </script>
 
-<h1>Home</h1>
+<h1>Sup</h1>
+
+Select a system and charachter

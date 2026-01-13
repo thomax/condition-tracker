@@ -19,7 +19,7 @@
     "effects": [
       {
         "description": "Subtract 2 from all Trait rolls until the end of next turn",
-        "targetAbility": "trait.*",
+        "targetAbility": "traits.*",
         "modifierType": "add",
         "modifierValue": -2
       }
@@ -53,7 +53,7 @@
         "modifierValue": 0
       },
       {
-        "key": "entangled" 
+        "key": "entangled"
       }
     ]
   },
@@ -71,10 +71,10 @@
         "modifierValue": 0
       },
       {
-        "key": "distracted" 
+        "key": "distracted"
       },
       {
-        "key": "vulnerable" 
+        "key": "vulnerable"
       },
       {
         "description": "Cannot make physical actions other than trying to break free"
@@ -119,13 +119,13 @@
     "end": "Vigor roll. Success: Vulnerable until end of next turn. Raise: Vulnerable until end of this turn",
     "effects": [
       {
-        "key": "distracted" 
+        "key": "distracted"
       },
       {
-        "key": "vulnerable" 
+        "key": "vulnerable"
       },
       {
-        "key": "prone" 
+        "key": "prone"
       },
       {
         "description": "Cannot move or take any actions."

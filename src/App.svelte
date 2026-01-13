@@ -2,7 +2,6 @@
   import { Router, Route } from 'svelte5-router'
 
   import Home from './views/Home.svelte'
-  import About from './views/About.svelte'
   import System from './views/System.svelte'
   import NavigationBar from './components/NavigationBar.svelte'
 
@@ -24,7 +23,6 @@
   <NavigationBar />
   <main>
     <Route path="/" component={Home} />
-    <Route path="/about" component={About} />
     <Route path="/:systemKey" component={System} />
     <Route path="/:systemKey/:characterKey" component={System} />
   </main>
